@@ -19,6 +19,7 @@ class TopologicalSpace:
         self.axes = axes
         self.set_astablishment_space()
         self.set_posTS_space()
+        self.set_coodinate_space()
         self.element_count = self._element_count(self.axes)
 
         # parameter set
@@ -46,11 +47,13 @@ class TopologicalSpace:
 
     def set_coodinate_space(self):
         print("\n set_pos_coodinate_space \n")
-        shape = [len(axis.elements) for axis in self.axes]
-        shape += [len(self.axes)]
-
         filename = path.join(mkdtemp(), 'coodinate_space.dat')
-        self.coodinate_space = np.memmap(filename, dtype='float32', mode='w+', shape=shape)
+        self.coodinate_space = np.memmap(filename, dtype='float32', mode='w+', shape=(self.element_count, len(self.axes)))
+
+        for pos_AS in range(len(self.astablishment_space)):
+            pos_TS = self.pos_AS2pos_TS(pos_AS)
+            coodinate = self.pos_TS2coodinate(pos_TS)
+            self.coodinate_space[pos_AS] = coodinate
 
         print("\n set_pos_coodinate_space end \n")
 

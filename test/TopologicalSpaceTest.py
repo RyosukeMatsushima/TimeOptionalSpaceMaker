@@ -20,5 +20,11 @@ class TestTopologicalSpace(unittest.TestCase):
         pos_TS_ans = tuple([np.array([val]) for val in pos_TS])
         self.assertEqual(pos_TS_ans, self.topologicalSpace.pos_AS2pos_TS(pos_AS))
 
+    # def test_set_coodinate_space(self):
+    #     axes = (Axis("theta", -6.0, 0.0, 1.), Axis("theta_dot", -5.0, 0.0, 1.), Axis("x", -4.0, 0.0, 1.))
+    #     self.topologicalSpace = TopologicalSpace(*axes)
+    #     print("self.topologicalSpace.coodinate_space")
+    #     print(self.topologicalSpace.coodinate_space)
+
 if __name__ == "__main__":
     unittest.main()
