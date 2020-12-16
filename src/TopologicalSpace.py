@@ -2,6 +2,7 @@ import numpy as np
 from tempfile import mkdtemp
 import os.path as path
 from tqdm import tqdm
+import itertools
 
 from src.Axis import Axis
 from src.submodule.PhysicsSimulator.SinglePendulum.SinglePendulum import SinglePendulum
@@ -46,16 +47,11 @@ class TopologicalSpace:
         print("\n set_posTS_space end \n")
 
     def set_coodinate_space(self):
-        print("\n set_pos_coodinate_space \n")
+        print("\n set_coodinate_space \n")
         filename = path.join(mkdtemp(), 'coodinate_space.dat')
         self.coodinate_space = np.memmap(filename, dtype='float32', mode='w+', shape=(self.element_count, len(self.axes)))
-
-        for pos_AS in range(len(self.astablishment_space)):
-            pos_TS = self.pos_AS2pos_TS(pos_AS)
-            coodinate = self.pos_TS2coodinate(pos_TS)
-            self.coodinate_space[pos_AS] = coodinate
-
-        print("\n set_pos_coodinate_space end \n")
+        self.coodinate_space = np.array(list(itertools.product(*[axis.elements for axis in self.axes])))
+        print("\n set_coodinate_space end \n")
 
     def _element_count(self, axes):
         val = 1
